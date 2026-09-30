@@ -16,13 +16,16 @@ with open(input_path, 'r', encoding='utf-8') as f:
 
 # Regex pattern untuk menghapus nomor subtitle dan timestamp
 # 1. Hapus baris yang hanya berisi angka (nomor subtitle)
-content = re.sub(r'^\d+\s*$', '', content, flags=re.MULTILINE)
+numberPattern = r'^\d+\s*$'
+content = re.sub(numberPattern, '', content, flags=re.MULTILINE)
 
 # 2. Hapus baris timestamp (format: HH:MM:SS,mmm --> HH:MM:SS,mmm)
-content = re.sub(r'^\d{2}:\d{2}:\d{2},\d{3}\s*-->\s*\d{2}:\d{2}:\d{2},\d{3}\s*$', '', content, flags=re.MULTILINE)
+timePattern = r'^\d{2}:\d{2}:\d{2},\d{3}\s*-->\s*\d{2}:\d{2}:\d{2},\d{3}\s*$'
+content = re.sub(timePattern, '', content, flags=re.MULTILINE)
 
 # 3. Hapus baris kosong berlebih (ganti 2+ newline berturut-turut menjadi 1 newline)
-content = re.sub(r'\n{2,}', '\n', content)
+newLinePattern = r'\n{2,}'
+content = re.sub(newLinePattern, '\n', content)
 
 # 4. Hapus newline di awal dan akhir
 content = content.strip()
